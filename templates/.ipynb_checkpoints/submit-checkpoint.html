@@ -8,11 +8,13 @@
   <form method="post">
     <label for="message">Your Message:</label>
       <br>
-    <input name="message" id="message">
+    <textarea cols="80" rows="10" id="message" type="text" name="message" required>
+</textarea>
+    <!--<input class = "msg" name="message" id="message">-->
       <br>
     <label for="user">Your Name or Handle:</label>
       <br>
-    <input name="user" id="user">
+    <input name="user" id="user" required>
       <br>
     <input type="submit" value="Submit message">
   </form>
@@ -23,6 +25,6 @@
 
   {% if error %}
     <br>
-    Oh no, we couldn't use that file!  Please upload an 8x8 numpy array as a text file.
+    Please fill out both your message and your handle.
   {% endif %}
 {% endblock %}

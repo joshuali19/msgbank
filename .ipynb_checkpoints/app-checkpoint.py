@@ -35,7 +35,7 @@ def get_message_db():
                     username TEXT,
                     message TEXT);
                     '''
-            cursor.execute(cmd)
+            cursor.execute(query)
             return g.message_db
     
 def insert_message(request):
@@ -50,9 +50,9 @@ def insert_message(request):
     message = request.form['message']
     handle = request.form['user']
     
-    with sqlite3.connect(DB_NAME) as conn:
+    with get_message_db() as conn:
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO messages (id, username, message) VALUES ((SELECT COUNT(*) FROM table_name) + 1, ?, ?)", (handle, message))
+        cursor.execute("INSERT INTO messages (id, username, message) VALUES ((SELECT COUNT(*) FROM messages) + 1, ?, ?)", (handle, message))
         conn.commit()
     return message, handle
     
@@ -64,10 +64,11 @@ def random_messages(n):
     @ output:
     - msgs (list): list of random messages
     '''
-    with sqlite3.connect(DB_NAME) as conn:
+    with get_message_db() as conn:
         cursor = conn.cursor()
-        msgs = cursor.execute("SELECT username, message FROM messages ORDER BY RANDOM() LIMIT (?);", (n))
-    return msgs
+        cursor.execute("SELECT username, message FROM messages ORDER BY RANDOM() LIMIT {0};".format(n))
+        msgs = cursor.fetchall()
+        return msgs
     
 ### stuff from last class
 app = Flask(__name__)
@@ -77,9 +78,11 @@ def submit():
     if request.method == 'GET':
         return render_template('submit.html')
     else:
-        msg, hndl = insert_message(request)
-        return render_template('submit.html', name = hndl, message = msg)
-    return render_template('submit.html')
+        try:
+            msg, hndl = insert_message(request)
+            return render_template('submit.html', name = hndl, message = msg)
+        except:
+            return render_template('submit.html', error = True)
 
 @app.route('/view/')
 def view():

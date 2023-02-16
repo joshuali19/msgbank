@@ -1,12 +1,12 @@
 <!doctype html>
-<!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <title>{% block title %}{% endblock %} - PIC16B Message Bank</title>
 <nav>
   <h1>Message Bank</h1>
   <!-- <b>Navigation:</b> -->
   <ul>
     <li><a href="{{ url_for('submit') }}">Submit A Message</a></li>
-    <li><a href="{{ url_for('main')}}">View Message Bank</a></li>
+    <li><a href="{{ url_for('view')}}">View Message Bank</a></li>
   </ul>
 </nav>
 <section class="content">
