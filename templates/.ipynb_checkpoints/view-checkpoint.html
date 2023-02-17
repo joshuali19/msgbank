@@ -6,12 +6,12 @@
 
 {% block content %}
   {% if msgs %}
-    Here are some of the messages people have sent!
+<p>Here are some of the messages people have sent!</p>
     <br>
     <br>
     {% for msg in msgs %}
-        <div> {{ msg[1] }}
-            <br> - {{ msg[0] }}
+        <div> "{{ msg[1] }}"
+            <br> &emsp;- {{ msg[0] }}
     </div>
     <br>
     {% endfor %}
