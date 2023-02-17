@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %} Submit a Message {% endblock %}
+
 {% block header %}
-  <h1>{% block title %}Submit{% endblock %}</h1>
+  <h1> Submit a Message </h1>
 {% endblock %}
 
 {% block content %}
@@ -16,11 +18,15 @@
       <br>
     <input name="user" id="user" required>
       <br>
+      <div class="text-center">
     <input type="submit" value="Submit message">
+      </div>
   </form>
 
-  {% if name %}
-    Thanks for submitting a message!
+  {% if msg %}
+Thanks for submitting a message! Here is your message:
+<br>
+<p> {{msg}} </p>
   {% endif %}
 
   {% if error %}
